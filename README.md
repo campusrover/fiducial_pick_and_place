@@ -12,6 +12,7 @@ are marked with fiducials.
     - [Software](#software)
 - [Why](#why)
 - [How](#how)
+- [Limitations](#limitations)
 ---
 
 ## Video
