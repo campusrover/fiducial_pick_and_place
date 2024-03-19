@@ -1,5 +1,9 @@
 # Fiducial Pick and Place
 
+This project has a robotic arm (the Interbotix PX-100) pick up a cargo,
+and place it in a drop-off zone. Both the cargo and the drop-off zone
+are marked with fiducials. 
+
 ---
 ## Table of Contents
 - [Video](#video)
@@ -15,10 +19,6 @@
 [Watch the project in action!](https://drive.google.com/file/d/1LnUodQ4iVPImvU8My7JRYx4RfPqLF8GL/view?usp=drivesdk)
 
 ## What
-
-This project has a robotic arm (the Interbotix PX-100) pick up a cargo,
-and place it in a drop-off zone. Both the cargo and the drop-off zone
-are marked with fiducials. 
 
 The main features of the project are: 
 
