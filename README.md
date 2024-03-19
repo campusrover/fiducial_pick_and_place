@@ -1,7 +1,14 @@
 # Fiducial Pick and Place
 
+---
 ## Table of Contents
-
+- [Video](#video)
+- [What](#what)
+    - [Hardware](#hardware)
+    - [Software](#software)
+- [Why](#why)
+- [How](#how)
+---
 
 ## Video
 
@@ -48,16 +55,28 @@ The hardware setup is pictured below:
 
 <p align="center">
     <kbd>
-        <img src="./images/hardware_setup.jpg" width="576" height="432" style="border-radius:50%" />
+        <img src="./images/hardware_setup.jpg" width="576" height="432" />
     </kbd>
 </p>
 
 ### Software
 
+The source code runs on ROS-Noetic in the
+
+ROS-Noetic. Ubuntu Version. Main packages used (`aruco_detect`, `tf2`).
+Numpy for calculation of distance between frame origins.
 
 ## Why
 
+Developed as an example project for future students of Brandeis
+Robotics Lab.
+
 ## How
 
+Show ros graph with different nodes.
+Explain how the math works, and why the simple approach of using
+transforms doesn't work (4dof). Review dof concept.
+
 ## Limitations
+
 
