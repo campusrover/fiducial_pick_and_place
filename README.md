@@ -2,17 +2,13 @@
 
 ## Introduction
 
-This project has the Trossen Robotics PX-100 Arm (pictured below) pick
-up a cargo, and place it in a drop-off zone. Both the cargo and the
-drop-off zone are marked with fiducials. 
-
-<p align="center">
-    <img src="./images/arm.jpg" width="500" height="500" />
-</p>
+This project has a robotic arm (the Interbotix PX-100) pick up a cargo,
+and place it in a drop-off zone. Both the cargo and the drop-off zone
+are marked with fiducials. 
 
 ### Video
 
-Watch the project in action!
+[Watch the project in action](https://drive.google.com/file/d/1LnUodQ4iVPImvU8My7JRYx4RfPqLF8GL/view?usp=drivesdk)!
 
 ### Hardware
 
