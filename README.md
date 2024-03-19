@@ -4,14 +4,14 @@ This project has a robotic arm (the Interbotix PX-100) pick up a cargo,
 and place it in a drop-off zone. Both the cargo and the drop-off zone
 are marked with fiducials.
 
-    <figure>
 <p align="center">
-        <kbd>
-            <img src="./images/arm.jpg" width="200" height="200" />
-        </kbd>
+    <kbd>
+        <img src="./images/arm.jpg" width="200" height="200" />
+    </kbd>
 </p>
-        <figcaption> The PX-100 Arm </figcaption>
-    </figure>
+<figure>
+    <figcaption> The PX-100 Arm </figcaption>
+</figure>
 
 
 ---
