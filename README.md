@@ -2,7 +2,7 @@
 
 This project has a robotic arm (the Interbotix PX-100) pick up a cargo,
 and place it in a drop-off zone. Both the cargo and the drop-off zone
-are marked with fiducials.
+are marked and detected with fiducials.
 
 ---
 ## Table of Contents
