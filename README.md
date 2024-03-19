@@ -48,7 +48,7 @@ The hardware setup is pictured below:
 
 <p align="center">
     <kbd>
-        <img src="./images/hardware_setup.jpg" width="576" height="432" />
+        <img src="./images/hardware_setup.jpg" width="576" height="432" style="border-radius:50%" />
     </kbd>
 </p>
 
