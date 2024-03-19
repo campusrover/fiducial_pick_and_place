@@ -2,9 +2,6 @@
 
 ## Video
 
-<p align="center">
-    <img src="./images/hardware_setup.jpg" width="576" height="432" />
-</p>
 [Watch the project in action!](https://drive.google.com/file/d/1LnUodQ4iVPImvU8My7JRYx4RfPqLF8GL/view?usp=drivesdk)
 
 ## Introduction
@@ -25,6 +22,9 @@ Besides a desktop computer, the main hardware used was:
 
 The hardware setup is pictured below:
 
+<p align="center">
+    <img src="./images/hardware_setup.jpg" width="576" height="432" />
+</p>
 
 ### Software
 
