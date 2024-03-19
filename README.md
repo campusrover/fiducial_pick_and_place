@@ -32,7 +32,7 @@ other objects (such as the arm and the cargo fiducial) are not
 hard-coded.
 
 As for the second feature, see the [Limitations](#limitations) section
-on how its first and second constraints may be overcome.
+on how its first and third constraints may be overcome.
 
 ### Hardware
 
@@ -46,9 +46,11 @@ Besides a desktop computer, the main hardware used was:
 
 The hardware setup is pictured below:
 
-<p align="center">
-    <img src="./images/hardware_setup.jpg" width="576" height="432" />
-</p>
+<kbd>
+    <p align="center">
+        <img src="./images/hardware_setup.jpg" width="576" height="432" />
+    </p>
+</kbd>
 
 ### Software
 
