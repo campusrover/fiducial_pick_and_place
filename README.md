@@ -8,10 +8,18 @@ are marked with fiducials.
 
 ### Video
 
-[Watch the project in action](https://drive.google.com/file/d/1LnUodQ4iVPImvU8My7JRYx4RfPqLF8GL/view?usp=drivesdk)!
+[Watch the project in action!](https://drive.google.com/file/d/1LnUodQ4iVPImvU8My7JRYx4RfPqLF8GL/view?usp=drivesdk)
 
 ### Hardware
 
-The hardware used for the project is:
+Besides a desktop computer, the main hardware used for the project was:
 
-1. the PX-100 Arm
+1. the PX-100 robotic arm;
+2. a usb camera;
+3. a 3D-printed cube; and
+4. three fiducial markers.
+
+The hardware setup is pictured below:
+
+<img src="./images/hardware_setup.jpg" width="576" height="432" />
+
