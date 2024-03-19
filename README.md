@@ -46,11 +46,9 @@ Besides a desktop computer, the main hardware used was:
 
 The hardware setup is pictured below:
 
-<p align="center">
-    <kbd>
-        <img src="./images/hardware_setup.jpg" width="576" height="432" />
-    </kbd>
-</p>
+> <p align="center">
+    <img src="./images/hardware_setup.jpg" width="576" height="432" />
+  </p>
 
 ### Software
 
