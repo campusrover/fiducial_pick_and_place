@@ -1,0 +1,29 @@
+<launch>  
+    <include file="$(find interbotix_xsarm_control)/launch/xsarm_control.launch" >
+        <arg name="robot_model" value="px100" />
+        <arg name="use_sim" value="false" />
+    </include>
+
+    <include file="$(find aruco_detect)/launch/aruco_detect.launch">
+        <param name="publish_images" value="true" />
+        <arg name="do_pose_estimation" value="true" />
+        <arg name="vis_msgs" value="true" />
+        <arg name="fiducial_len" value="0.035" />
+        <arg name="fiducial_len_override" value="1: 0.024" />
+        <arg name="dictionary" value="0" />
+        <arg name="camera" value="usb_cam" />
+        <arg name="image" value="image_raw" />
+    </include>
+
+    <include file="$(find usb_cam)/launch/usb_cam-test.launch" />
+    
+    <node name="fixed_marker_frame_broadcaster" pkg="fiducial_pick_and_place" type="fixed_marker_frame_broadcaster.py" output="screen"/>
+
+    <node name="camera_frame_broadcaster" pkg="fiducial_pick_and_place" type="camera_frame_broadcaster.py" output="screen" />
+    <node name="cargo_frame_broadcaster" pkg="fiducial_pick_and_place" type="cargo_frame_broadcaster.py" output="screen" />
+    <node name="pickup_frame_broadcaster" pkg="fiducial_pick_and_place" type="pickup_frame_broadcaster.py" output="screen" />
+    <node name="place_frame_broadcaster" pkg="fiducial_pick_and_place" type="place_frame_broadcaster.py" output="screen" />
+
+    <!-- <node name="test_frame_broadcaster" pkg="fiducial_pick_and_place" type="test_frame_broadcaster.py" output="screen" /> -->
+
+</launch>
