@@ -9,9 +9,9 @@ are marked with fiducials.
         <img src="./images/arm.jpg" width="200" height="200" />
     </kbd>
 </p>
-<figure>
-    <figcaption> The PX-100 Arm </figcaption>
-</figure>
+<p align="center">
+    [The PX-100 Arm]
+</p>
 
 
 ---
