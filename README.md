@@ -21,5 +21,7 @@ Besides a desktop computer, the main hardware used for the project was:
 
 The hardware setup is pictured below:
 
-<img src="./images/hardware_setup.jpg" width="576" height="432" />
+<p align="center>
+    <img src="./images/hardware_setup.jpg" width="576" height="432" />
+</p>
 
