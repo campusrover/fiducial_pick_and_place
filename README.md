@@ -17,14 +17,15 @@ Besides a desktop computer, the main hardware used for the project was:
 
 1. the PX-100 robotic arm;
 2. a usb camera;
-3. a 3D-printed cube; and
-4. three fiducial markers.
+3. three fiducial markers.
+4. a camera stand; and
+3. a 3D-printed cube.
 
 The hardware setup is pictured below:
 
 <p align="center">
-    <img src="./images/hardware_setup.jpg" width="576" height="432" />
+    <img src="./images/hardware_setup.jpg" width="288" height="216" />
 </p>
 
-
+###  
 
