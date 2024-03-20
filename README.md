@@ -2,7 +2,7 @@
 
 This project has a robotic arm (the Interbotix PX-100) pick up a cargo,
 and place it in a drop-off zone. Both the cargo and the drop-off zone
-are marked and detected with fiducials.
+are marked by, and detected with, fiducials.
 
 ---
 ## Table of Contents
@@ -166,8 +166,9 @@ the `fixed_marker` frame, to deduce the location of the camera.
 This, effectively, is what the `camera_frame_broadcaster.py` file does,
 in publishing a frame for the camera as a child of the `fixed_marker`
 frame, by using the transform from `fiducial_0` to `usb_cam`. The
-result can be seen below. Notice how the frames of `fiducial_0` and
-`fixed_marker` overlap.
+result can be seen below. Notice how the position of the `fiducial_0`
+frame, given by `aruco_detect`, overlaps with that of the
+`fixed_marker` frame.
 
 <p align="center">
     <kbd>
@@ -179,11 +180,35 @@ And this is how we get the dynamic detection of the camera's location,
 mentioned above. Since our `fixed_marker` frame serves as the anchor
 for our `usb_cam` frame, we can move our `usb_cam` freely and expect
 our system to detect it, so long as the camera keeps `fiducial_0`
-within its field of vision. 
+within its field of vision.
+
+### Arm Control
+
+Thus, with our vision solution, the `usb_cam` frame can be successfully
+registered in the tf tree as a child of the `fixed_marker` frame. And
+so long as the camera keeps the fixed fiducial (`fiducial_0`) in view,
+any other fiducial that it sees via `aruco_detect` would also have its
+frame automatically registered as a node of the tf tree.
+
+This is how we see, in our diagram of the tree above, `fiducial_1` and
+`fiducial_2` being children of `usb_cam`, where the former is the
+fiducial fixed to the cargo, and the latter is that representing the
+drop-off zone.
+
+The picture that emerges in RViz is as follows:
+
+<p align="center">
+    <kbd>
+        <img src="./images/fiducial_setup.png" />
+    </kbd>
+</p>
 
 
- 
+means that any fiducial that the camera 
 
+ the frame of any fiducial that the
+camera sees via `aruco_detect` is registered automatically as a node of
+the
 
 
 Brief comment on `test_frame.py` and `test_arm_controller.py`
