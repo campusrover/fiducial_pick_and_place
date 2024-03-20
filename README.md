@@ -203,6 +203,13 @@ The picture that emerges in RViz is as follows:
     </kbd>
 </p>
 
+Given this setup, we would expect controlling the arm to be as simple
+as taking the transform from some component of the arm to, say, the
+cargo fiducial, and directing the robot to move accordingly.
+Unfortunately, ...
+
+review dof concept.
+explain why this is a limitation.
 
 means that any fiducial that the camera 
 
