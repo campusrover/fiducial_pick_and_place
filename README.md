@@ -48,7 +48,7 @@ Besides a desktop computer, the main hardware used was:
 
 1. the PX-100 robotic arm;
 2. a usb camera;
-3. three fiducial markers.
+3. three fiducial markers;
 4. a camera stand; and
 3. a 3D-printed cube.
 
@@ -62,17 +62,50 @@ The hardware setup is pictured below:
 
 ### Software
 
-The source code runs on ROS-Noetic in the
+The source code was written to run on the Noetic-Ninjemys distribution
+of ROS, and thus depends on Ubuntu 20.04. The main ROS packages used
+were:
 
-ROS-Noetic. Ubuntu Version. Main packages used (`aruco_detect`, `tf2`).
-Numpy for calculation of distance between frame origins.
+1. `tf2` for managing coordinate frames and transforms;
+2. `aruco_detect` for fiducial detection; and
+3. `interbotix_xs_modules` for arm manipulation.
+
+Besides the above, the `tf` package was used to convert quaternion
+rotations into Euler angles, and the `camera_calibration` package was
+used to calibrate the usb camera for fiducial detection. Finally, the
+project relied on `numpy` to calculate the distance between the origins
+of two coordinate frames.
 
 ## Why
 
-Developed as an example project for future students of Brandeis
-Robotics Lab.
+This project was developed in the Brandeis Robotics Lab to help
+students of COSI 119A: Autonomous Robotics learn how to use the PX-100
+Arm.
 
 ## How
+
+The source code, found under the `src` directory, consists of two
+groups:
+
+1. tf2 broadcasters: the files whose names terminate in
+   `_broadcaster.py` make up this group. Each publishes a coordinate
+   frame and attaches it to the tf tree which, roughly speaking, helps
+   the program determine the relative position of objects (the arm's
+   gripper, the fiducials, the cargo, etc.)
+2. arm controllers: the files whose names end in `_controller.py`
+   are part of this group. Here, the cargo pickup and place logic is
+   implemented entirely in the `arm_controller.py` file.
+
+This is what the tf tree looks like:
+
+<p align="center">
+    <kbd>
+        <img src="./images/tf_tree.jpg" />
+    </kbd>
+</p>
+
+
+
 
 Show ros graph with different nodes.
 Explain how the math works, and why the simple approach of using

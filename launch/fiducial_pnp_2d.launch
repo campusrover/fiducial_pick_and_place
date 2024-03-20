@@ -24,6 +24,6 @@
     <node name="pickup_frame_broadcaster" pkg="fiducial_pick_and_place" type="pickup_frame_broadcaster.py" output="screen" />
     <node name="place_frame_broadcaster" pkg="fiducial_pick_and_place" type="place_frame_broadcaster.py" output="screen" />
 
-    <!-- <node name="test_frame_broadcaster" pkg="fiducial_pick_and_place" type="test_frame_broadcaster.py" output="screen" /> -->
+    <node name="test_frame_broadcaster" pkg="fiducial_pick_and_place" type="test_frame_broadcaster.py" output="screen" />
 
 </launch>
