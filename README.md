@@ -16,7 +16,11 @@ are marked by, and detected with, fiducials.
     - [The TF Tree](#the-tf-tree)
     - [The Vision Solution](#the-vision-solution)
     - [Arm Control](#arm-control)
+        - [The Fiducial Setup](#the-fiducial-setup)
+        - [The Problem](#the-problem)
+        - [The Solution](#the-solution)
 - [Limitations](#limitations)
+- [Miscellaneous](#miscellaneous)
 ---
 
 ## Video
@@ -184,6 +188,8 @@ within its field of vision.
 
 ### Arm Control
 
+#### The Fiducial Setup
+
 Thus, with our vision solution, the `usb_cam` frame can be successfully
 registered in the tf tree as a child of the `fixed_marker` frame. And
 so long as the camera keeps the fixed fiducial (`fiducial_0`) in view,
@@ -203,30 +209,32 @@ The picture that emerges in RViz is as follows:
     </kbd>
 </p>
 
-Given this setup, we would expect controlling the arm to be as simple
-as taking the transform from some component of the arm to, say, the
-cargo fiducial, and directing the robot to move accordingly.
-Unfortunately, ...
+#### The Problem
 
-review dof concept.
-explain why this is a limitation.
+Given this fiducial setup, we would expect controlling the arm to be as
+simple as taking the transform from some component of the arm to, say,
+the cargo fiducial, and directing the robot's end effector to match its
+frame to that of the cargo fiducial.
 
-means that any fiducial that the camera 
+Unfortunately, the PX-100 has less than 6 degrees of freedom, and so it
+cannot position its end-effector's frame to match the pose of any
+arbitrary frame within its workspace. So our arm control algorithm must
+be a bit more complex, and function within the hardware constraints of
+the robot.
 
- the frame of any fiducial that the
-camera sees via `aruco_detect` is registered automatically as a node of
-the
+#### The Solution
+
+Fundamentally, then, the PX-100 can be thought of as a linear gripper
+on a swivel. In other words, the arm must directly face whatever it
+would grab; before it can grab any object, there must be a straight
+line between the object and the middling area of the robot's end
+effector.
 
 
-Brief comment on `test_frame.py` and `test_arm_controller.py`
 
-
-Show ros graph with different nodes.
-Explain how the math works, and why the simple approach of using
-transforms doesn't work (4dof). Review dof concept.
-
-### Arm Control
 
 ## Limitations
 
+## Miscellaneous
 
+The test frame.
