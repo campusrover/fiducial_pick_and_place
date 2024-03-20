@@ -176,7 +176,10 @@ result can be seen below. Notice how the frames of `fiducial_0` and
 </p>
 
 And this is how we get the dynamic detection of the camera's location,
-mentioned above. 
+mentioned above. Since our `fixed_marker` frame serves as the anchor
+for our `usb_cam` frame, we can move our `usb_cam` freely and expect
+our system to detect it, so long as the camera keeps `fiducial_0`
+within its field of vision. 
 
 
  
