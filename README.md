@@ -100,7 +100,7 @@ This is what the tf tree looks like:
 
 <p align="center">
     <kbd>
-        <img src="./images/tf_tree.jpg" />
+        <img src="./images/tf_tree.png" />
     </kbd>
 </p>
 
