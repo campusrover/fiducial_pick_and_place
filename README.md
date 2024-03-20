@@ -123,7 +123,7 @@ On the other hand, the subtree that has the right child of `world`
 ### The Vision Solution
 
 The `fixed_marker` frame is a static frame that is published to be 4.35
-inches to the left of the `world` frame, when we view the arm from
+inches to the right of the `world` frame, when we view the arm from
 above. The two frames can be seen in the RViz screenshot below:
 
 <p align="center">
@@ -140,17 +140,46 @@ Overlaid with the model of the robot, the picture looks like this:
     </kbd>
 </p>
 
- 
-
-
-
-The taped fiducial seen in the hardware setup above was placed
-such that its coordinate frame overlaps exactly with the `fixed_marker`
-frame.
+The fiducial taped to the platform, seen in the hardware setup picture
+above, was positioned such that its coordinate frame overlaps exactly
+with the `fixed_marker` frame.
 
 Now, the dimensions of every fiducial is known, and our camera
 intrinsics have been calibrated via the `camera_calibration` package.
-Therefore, the `aruco_detect` package can use this information  
+So the `aruco_detect` package can use this information to publish
+transforms between the taped fiducial and the usb camera.
+
+But `aruco_detect` by itself doesn't "know" where the taped fiducial is
+located or where the usb camera is located "in the real world". It only
+knows the transforms between the fiducial and camera frames, _whereever
+they may be_.
+ 
+This is where we can use the `fixed_marker` frame we mentioned above to
+"anchor" the coordinate frames of both the fiducial and the camera.
+After all, we know where the `fixed_marker` frame is in the real world:
+4.35 inches to the right of the center of the base of the robot. 
+
+So we can take the transform from the taped fiducial to the camera,
+provided by `aruco_detect`, and apply its translation and rotation to
+the `fixed_marker` frame, to deduce the location of the camera.
+
+This, effectively, is what the `camera_frame_broadcaster.py` file does,
+in publishing a frame for the camera as a child of the `fixed_marker`
+frame, by using the transform from `fiducial_0` to `usb_cam`. The
+result can be seen below. Notice how the frames of `fiducial_0` and
+`fixed_marker` overlap.
+
+<p align="center">
+    <kbd>
+        <img src="./images/usb_cam.png" />
+    </kbd>
+</p>
+
+And this is how we get the dynamic detection of the camera's location,
+mentioned above. 
+
+
+ 
 
 
 
