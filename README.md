@@ -230,7 +230,23 @@ would grab; before it can grab any object, there must be a straight
 line between the object and the middling area of the robot's end
 effector.
 
+***=====RESUME HERE=====***
 
+1. Illustrate this point with the test frame and the
+   `test_arm_controller`. Add more screenshots of RViz.
+
+But the requirement that a user perfectly align the cargo and the
+drop-off zone's fiducial's x-axis to an imagined straight line from the
+center of the robot to the cargo is not only unrealistic, but also
+impractical, even for an educational teaching project.
+
+A solution would be as follows.
+1. find the distance from the origin of the `base_link` to the
+   fiducial.
+2. publish a frame that shares its origin with the fiducial, but has
+   the same orientation as the `base_link`'s frame.
+3. Use the frame to calculate the "opposite". The distance is the
+   "hypotenuse". Then use arcsin to derive the angle of the yaw.
 
 
 ## Limitations
