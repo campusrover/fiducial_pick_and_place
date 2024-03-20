@@ -12,6 +12,10 @@ are marked and detected with fiducials.
     - [Software](#software)
 - [Why](#why)
 - [How](#how)
+    - [Overview](#overview)
+    - [The TF Tree](#the-tf-tree)
+    - [The Vision Solution](#the-vision-solution)
+    - [Arm Control](#arm-control)
 - [Limitations](#limitations)
 ---
 
@@ -80,9 +84,11 @@ of two coordinate frames.
 
 This project was developed in the Brandeis Robotics Lab to help
 students of COSI 119A: Autonomous Robotics learn how to use the PX-100
-Arm.
+Arm. 
 
 ## How
+
+### Overview
 
 The source code, found under the `src` directory, consists of two
 groups:
@@ -96,6 +102,8 @@ groups:
    are part of this group. Here, the cargo pickup and place logic is
    implemented entirely in the `arm_controller.py` file.
 
+### The TF Tree 
+
 This is what the tf tree looks like:
 
 <p align="center">
@@ -104,12 +112,56 @@ This is what the tf tree looks like:
     </kbd>
 </p>
 
+The root of the tree is the `world` frame. The subtree that has the
+left child of `world` (`px100/base_link`) as its root consists of
+frames that help us locate various parts of the PX-100 robotic arm.
 
+On the other hand, the subtree that has the right child of `world`
+(`fixed_marker`) as its root are made of frames that constitute our
+"vision solution". 
+
+### The Vision Solution
+
+The `fixed_marker` frame is a static frame that is published to be 4.35
+inches to the left of the `world` frame, when we view the arm from
+above. The two frames can be seen in the RViz screenshot below:
+
+<p align="center">
+    <kbd>
+        <img src="./images/fixed_marker_2.png" />
+    </kbd>
+</p>
+
+Overlaid with the model of the robot, the picture looks like this:
+
+<p align="center">
+    <kbd>
+        <img src="./images/fixed_marker_1.png" />
+    </kbd>
+</p>
+
+ 
+
+
+
+The taped fiducial seen in the hardware setup above was placed
+such that its coordinate frame overlaps exactly with the `fixed_marker`
+frame.
+
+Now, the dimensions of every fiducial is known, and our camera
+intrinsics have been calibrated via the `camera_calibration` package.
+Therefore, the `aruco_detect` package can use this information  
+
+
+
+Brief comment on `test_frame.py` and `test_arm_controller.py`
 
 
 Show ros graph with different nodes.
 Explain how the math works, and why the simple approach of using
 transforms doesn't work (4dof). Review dof concept.
+
+### Arm Control
 
 ## Limitations
 
