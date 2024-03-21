@@ -36,19 +36,20 @@ The main features of the project are:
 2. the ability of the arm to pickup and place a cargo at varying
    locations, so long as both the cargo's and drop-off zone's fiducials
    are:
-    1. detected by the camera, and have their x-axes facing away from
-       the arm;
-    2. within the arm's reach radius; and
-    3. within a `[90, -90]` degree range, where degree `0` is the
+    1. detected by the camera (which must also be detecting the
+       fixed fiducial mentioned above);
+    2. positioned with their x-axes facing away from the arm;
+    3. within the arm's reach; and
+    4. within a `[90, -90]` degree range, where degree `0` is the
        direction the arm faces in its sleeping position.
 
 Practically speaking, the first feature allows us to adjust the height
 and angle of the camera freely, since its relative location to the
-other objects (such as the arm and the cargo fiducial) are not
+other objects (such as the arm and the cargo fiducial) is not
 hard-coded.
 
 As for the second feature, see the [Limitations](#limitations) section
-on how its first and third constraints may be overcome.
+on how constraints (ii) and (iv) may be overcome.
 
 ### Hardware
 
