@@ -18,6 +18,7 @@ are marked by, and detected with, fiducials.
     - [Arm Control](#arm-control)
         - [The Fiducial Setup](#the-fiducial-setup)
         - [The Problem](#the-problem)
+        - [Problem Analysis](#problem-analysis)
         - [The Solution](#the-solution)
 - [Limitations](#limitations)
 - [Miscellaneous](#miscellaneous)
@@ -162,20 +163,23 @@ absolute positions may be.
  
 This is where we can use the `fixed_marker` frame we mentioned above to
 "anchor" the coordinate frames of both the fiducial and the camera.
+
 After all, we know where the `fixed_marker` frame is in the real world:
 4.35 inches to the starboard side of the center of the base of the
-robot.  Further, as mentioned above, we have aligned the taped fiducial
+robot.  Further, as mentioned above, we had aligned the taped fiducial
 such that its frame overlaps exactly with the `fixed_marker` frame.
 
-So we can take the transform from the taped fiducial to the camera,
-provided by `aruco_detect`, and apply its translation and rotation to
+So we can take the transform from the taped fiducial to the camera
+(provided by `aruco_detect`) and apply its translation and rotation to
 the `fixed_marker` frame, to deduce the location of the camera.
 
-This, effectively, is what the `camera_frame_broadcaster.py` file does,
-in publishing a frame for the camera as a child of the `fixed_marker`
-frame, by using the transform from `fiducial_0` to `usb_cam`. The
-result can be seen below. Notice how the position of the `fiducial_0`
-frame, given by `aruco_detect`, overlaps with that of the
+This, effectively, is what the `camera_frame_broadcaster.py` file does.
+For it publishes a frame for the camera as a child of the
+`fixed_marker` frame, using the transform from `fiducial_0` (the taped
+fiducial) to `usb_cam`. 
+
+The result is visualized below. Notice how the position of the
+`fiducial_0` frame, given by `aruco_detect`, overlaps with that of the
 `fixed_marker` frame.
 
 <p align="center">
@@ -184,10 +188,10 @@ frame, given by `aruco_detect`, overlaps with that of the
     </kbd>
 </p>
 
-And this is how we get the dynamic detection of the camera's location,
-mentioned above. Since our `fixed_marker` frame serves as the anchor
-for our `usb_cam` frame, we can move our `usb_cam` freely and expect
-our system to detect it, so long as the camera keeps `fiducial_0`
+And this is how we are able to dynamically detect the camera's
+location. Since our `fixed_marker` frame serves as the anchor for our
+`usb_cam` frame, we can move our usb camera freely and expect our
+system to detect it, so long as the camera keeps the taped fiducial
 within its field of vision.
 
 ### Arm Control
@@ -195,14 +199,14 @@ within its field of vision.
 #### The Fiducial Setup
 
 Thus, with our vision solution, the `usb_cam` frame can be successfully
-registered in the tf tree as a child of the `fixed_marker` frame. And
-so long as the camera keeps the fixed fiducial (`fiducial_0`) in view,
-any other fiducial that it sees via `aruco_detect` would also have its
-frame automatically registered as a node of the tf tree.
+added to the tf tree as a child of the `fixed_marker` frame. And so
+long as the camera keeps the taped fiducial (or again, `fiducial_0`) in
+view, any other fiducial that it sees with `aruco_detect` would also
+have its frame automatically registered as a node of the tf tree.
 
 This is how we see, in our diagram of the tree above, `fiducial_1` and
 `fiducial_2` being children of `usb_cam`, where the former is the
-fiducial fixed to the cargo, and the latter is that representing the
+fiducial attached to the cargo, and the latter is that representing the
 drop-off zone.
 
 The picture that emerges in RViz is as follows:
@@ -215,34 +219,70 @@ The picture that emerges in RViz is as follows:
 
 #### The Problem
 
-Given this fiducial setup, we would expect controlling the arm to be as
-simple as taking the transform from some component of the arm to, say,
-the cargo fiducial, and directing the robot's end effector to match its
-frame to that of the cargo fiducial.
+Given this fiducial setup, we might expect picking and placing the
+cargo to be fairly simple. For example, the following plan for grabbing
+the cargo appears feasible:
+
+1. Take the transform from some component of the arm to the fiducial
+   attached to the cargo.
+2. Use this transform and the arm's movement API to direct the robot's
+   gripper to match its frame with that of the cargo fiducial.
+3. Close the gripper.
 
 Unfortunately, the PX-100 has less than 6 degrees of freedom, and so it
 cannot position its end-effector's frame to match the pose of any
 arbitrary frame within its workspace. So our arm control algorithm must
-be a bit more complex, and function within the hardware constraints of
-the robot.
+be slightly more complex, and function within the hardware constraints
+of the robot.
 
-#### The Solution
+#### Problem Analysis 
 
-Fundamentally, then, the PX-100 can be thought of as a linear gripper
-on a swivel. In other words, the arm must directly face whatever it
-would grab; before it can grab any object, there must be a straight
-line between the object and the middling area of the robot's end
-effector.
+Fundamentally, the PX-100 can be thought of as a linear gripper fixed
+to a potter's wheel. If we want the arm to grab an object, we must
+first rotate the wheel by some yaw such that the arm's gripper
+directly faces the object. 
+
+In other words, before the arm can grab any object, or even move to
+some desired location, we must first turn it on its swivel so that
+there is a geometrically straight line between the object and the
+middle of the robot's end effector.
+
+This restriction would not pose a problem in the following scenario.
+Suppose that the frame of the target destination is such that its
+x-axis lies on some straight line `s`, such that for some yaw `y`, if
+we swivel the arm by `y`, its end effector would point to the target
+destination via `s`.
+
+Then, provided that `s` lies at ground-level (this is more of a
+restriction of the PX-100's movement API) we can simply implement the
+plan we described in [the problem](#the-problem) section above. That
+is, we can use some transform from the arm to the target object to move
+the arm to the object.
 
 ***=====RESUME HERE=====***
 
-1. Illustrate this point with the test frame and the
-   `test_arm_controller`. Add more screenshots of RViz.
+Indeed, this is what `test_frame_broadcaster.py` and
+`test_arm_controller.py` collectively simulate. The former broadcasts a
+test frame whose x-axis lies on the straight line visualized in black
+below.
 
-But the requirement that a user perfectly align the cargo and the
-drop-off zone's fiducial's x-axis to an imagined straight line from the
-center of the robot to the cargo is not only unrealistic, but also
-impractical, even for an educational teaching project.
+***Insert picture of test frame with black line drawn with the measure
+tool (or some other better tool)***
+
+Given that the test frame is positioned as it is, we can directly move
+the arm to the frame via transforms. This is what the
+`test_frame_broadcaster.py` code does, as seen below:
+
+***Insert picture of robot arm having moved to the test frame***
+
+But it is unreasonable to demand of a human user of the program that he
+perfectly align the x-axis of the cargo's fiducial to an imagined
+straight line from the center of the robot. Even as a teaching tool,
+our project must provide a more practical answer.
+
+#### The Solution
+
+The solution implemented in this project was as follows. 
 
 A solution would be as follows.
 1. find the distance from the origin of the `base_link` to the
