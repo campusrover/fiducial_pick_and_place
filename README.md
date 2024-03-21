@@ -59,7 +59,7 @@ Besides a desktop computer, the main hardware used was:
 2. a usb camera;
 3. three fiducial markers;
 4. a camera stand; and
-3. a 3D-printed cube.
+5. a 3D-printed cube.
 
 The hardware setup is pictured below:
 
@@ -76,40 +76,41 @@ of ROS, and thus depends on Ubuntu 20.04. The main ROS packages used
 were:
 
 1. `tf2` for managing coordinate frames and transforms;
-2. `aruco_detect` for fiducial detection; and
+2. `aruco_detect` for fiducial recognition; and
 3. `interbotix_xs_modules` for arm manipulation.
 
 Besides the above, the `tf` package was used to convert quaternion
 rotations into Euler angles, and the `camera_calibration` package was
-used to calibrate the usb camera for fiducial detection. Finally, the
-project relied on `numpy` to calculate the distance between the origins
-of two coordinate frames.
+leveraged to calibrate the usb camera for fiducial detection. Finally,
+the project relied on `numpy` to calculate the distance between the
+origins of two coordinate frames.
 
 ## Why
 
-This project was developed in the Brandeis Robotics Lab to help
-students of COSI 119A: Autonomous Robotics learn how to use the PX-100
-Arm. 
+This project was developed in the Brandeis Robotics Lab as a teaching
+tool. Its aim was to help students of Brandeis's COSI 119A: Autonomous
+Robotics learn how to use the PX-100 Arm. 
 
 ## How
 
 ### Overview
 
-The source code, found under the `src` directory, consists of two
+The source code, found in the `src` directory, can be divided into two
 groups:
 
 1. tf2 broadcasters: the files whose names terminate in
-   `_broadcaster.py` make up this group. Each publishes a coordinate
-   frame and attaches it to the tf tree which, roughly speaking, helps
-   the program determine the relative position of objects (the arm's
-   gripper, the fiducials, the cargo, etc.)
-2. arm controllers: the files whose names end in `_controller.py`
-   are part of this group. Here, the cargo pickup and place logic is
-   implemented entirely in the `arm_controller.py` file.
+   `_broadcaster.py` make up this group. Each file publishes a
+   coordinate frame and attaches it to the tf tree which, roughly
+   speaking, helps the program determine the relative position of the
+   physical objects used in the project (the fixed fiducial, the
+   camera, the cargo, the drop-off zone, etc.).
+2. arm controllers: the two files whose names end in `_controller.py`
+   form this group. Of the two, it is the `arm_controller.py` file that
+   contains the entirety of the cargo pickup and place logic.
 
 ### The TF Tree 
 
-This is what the tf tree looks like:
+This is what the tf tree of the project looks like:
 
 <p align="center">
     <kbd>
@@ -128,8 +129,8 @@ On the other hand, the subtree that has the right child of `world`
 ### The Vision Solution
 
 The `fixed_marker` frame is a static frame that is published to be 4.35
-inches to the right of the `world` frame, when we view the arm from
-above. The two frames can be seen in the RViz screenshot below:
+inches to the right of the `world` frame. To the right, that is, when
+we view the `world` frame as pictured in this RViz screenshot:
 
 <p align="center">
     <kbd>
@@ -137,7 +138,7 @@ above. The two frames can be seen in the RViz screenshot below:
     </kbd>
 </p>
 
-Overlaid with the model of the robot, the picture looks like this:
+Overlaid with the model of the robot, the image looks like this:
 
 <p align="center">
     <kbd>
@@ -154,15 +155,17 @@ intrinsics have been calibrated via the `camera_calibration` package.
 So the `aruco_detect` package can use this information to publish
 transforms between the taped fiducial and the usb camera.
 
-But `aruco_detect` by itself doesn't "know" where the taped fiducial is
-located or where the usb camera is located "in the real world". It only
-knows the transforms between the fiducial and camera frames, _whereever
-they may be_.
+But `aruco_detect` by itself knows neither where the taped fiducial nor
+the usb camera is located "in the real world". It only knows the
+transforms between the fiducial and camera frames, whereever their
+absolute positions may be.
  
 This is where we can use the `fixed_marker` frame we mentioned above to
 "anchor" the coordinate frames of both the fiducial and the camera.
 After all, we know where the `fixed_marker` frame is in the real world:
-4.35 inches to the right of the center of the base of the robot. 
+4.35 inches to the starboard side of the center of the base of the
+robot.  Further, as mentioned above, we have aligned the taped fiducial
+such that its frame overlaps exactly with the `fixed_marker` frame.
 
 So we can take the transform from the taped fiducial to the camera,
 provided by `aruco_detect`, and apply its translation and rotation to
