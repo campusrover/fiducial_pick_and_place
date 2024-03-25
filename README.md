@@ -334,7 +334,7 @@ turn the arm so that its limbs lie along the straight line between the
 origin of `world` and that of `place`. And the following is true:
 
 <p align="center">
-    `arcsin(O/H) == Y`,
+    <code>arcsin(O/H) == Y</code>,
 </p>
 
 where `H` represents the length of the hypotenuse, and `O` that of the
