@@ -275,7 +275,13 @@ Given that the test frame is positioned as it is, we can directly move
 the arm to the frame via transforms. This is what the
 `test_arm_controller.py` code does:
 
-***Insert picture of robot arm having moved to the test frame***
+<p align="center">
+    <kbd>
+        <img src="./images/test_arm_controller_in_action.png" />
+    </kbd>
+</p>
+
+
 
 But it is unreasonable to demand of a human user of the program that he
 perfectly align the x-axis of the cargo's fiducial to an imagined
