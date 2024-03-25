@@ -333,7 +333,9 @@ The letter `Y` represents the yaw, or the angle by which we need to
 turn the arm so that its limbs lie along the straight line between the
 origin of `world` and that of `place`. And the following is true:
 
-`arcsin(O/H) == Y`,
+<p align="center">
+    `arcsin(O/H) == Y`,
+</p>
 
 where `H` represents the length of the hypotenuse, and `O` that of the
 line opposite `Y`, in our right triangle. 
