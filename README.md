@@ -281,16 +281,55 @@ the arm to the frame via transforms. This is what the
     </kbd>
 </p>
 
-
-
-But it is unreasonable to demand of a human user of the program that he
-perfectly align the x-axis of the cargo's fiducial to an imagined
-straight line from the center of the robot. Even as a teaching tool,
-our project must provide a more practical answer.
+But it is unreasonable to demand of human users of our program that
+they manually perfectly align the x-axis of the cargo's fiducial to an
+imagined straight line from the center of the robot. Even as a teaching
+tool, our project must provide a more practical answer.
 
 #### The Solution
 
-The solution implemented in this project was as follows. 
+The solution implemented in this project used some basic trigonometry.
+We will walk through our strategy for the place logic, since it's
+fundamentally the same as that for our pickup logic.
+
+As we already saw, our vision solution allows us to detect the fiducial
+that represents the drop-off zone, namely, that with frame
+`fiducial_2`:
+
+<p align="center">
+    <kbd>
+        <img src="./images/fiducial_2.png" />
+    </kbd>
+</p>
+
+The first step, then, is to broadcast another coordinate frame that
+shares its origin with that of `fiducial_2`, but whose rotation matches
+that of the `world` frame (we will see why later). We will call this
+the "place" frame.
+
+<p align="center">
+    <kbd>
+        <img src="./images/place_frame.png" />
+    </kbd>
+</p>
+
+Here's an image of the `fiducial_2` and `place` frames overlapping.
+
+<p align="center">
+    <kbd>
+        <img src="./images/fiducial_2_and_place.png" />
+    </kbd>
+</p>
+
+Now notice that we can draw the following triangle:
+
+<p align="center">
+    <kbd>
+        <img src="./images/triangle.png" />
+    </kbd>
+</p>
+
+
 
 A solution would be as follows.
 1. find the distance from the origin of the `base_link` to the
