@@ -361,7 +361,12 @@ The result is pictured below:
     </kbd>
 </p>
 
-Note that the arm's api    
+Note: in navigating `arm_controller.py`, observe that the px-100's api
+manipulates the arm's gripper by using transforms from the
+`px100/base_link` frame to the destination frame. This is why we use
+the distance `H` to move the gripper to the place frame, though the
+distance between the gripper's frame and the place frame is much less
+than `H`. 
 
 there is a straight line between the origin of
 `world` and that of `place`. The letter `H` represents the distance of
