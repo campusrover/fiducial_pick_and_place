@@ -82,14 +82,14 @@ were:
 
 Besides the above, the `tf` package was used to convert quaternion
 rotations into Euler angles, and the `camera_calibration` package was
-leveraged to calibrate the usb camera for fiducial detection. Finally,
-the project relied on `numpy` to calculate the distance between the
-origins of two coordinate frames.
+used to calibrate the usb camera for fiducial detection. Finally, the
+project relied on `numpy` to calculate the distance between the origins
+of two coordinate frames.
 
 ## Why
 
 This project was developed in the Brandeis Robotics Lab as a teaching
-tool. Its aim was to help students of Brandeis's COSI 119A: Autonomous
+tool. Its aim was to help students of Brandeis' COSI 119A: Autonomous
 Robotics learn how to use the PX-100 Arm. 
 
 ## How
@@ -102,12 +102,12 @@ groups:
 1. tf2 broadcasters: the files whose names terminate in
    `_broadcaster.py` make up this group. Each file publishes a
    coordinate frame and attaches it to the tf tree which, roughly
-   speaking, helps the program determine the relative position of the
+   speaking, helps the program determine the relative position of some
    physical objects used in the project (the fixed fiducial, the
    camera, the cargo, the drop-off zone, etc.).
 2. arm controllers: the two files whose names end in `_controller.py`
    form this group. Of the two, it is the `arm_controller.py` file that
-   contains the entirety of the cargo pickup and place logic.
+   contains all of the cargo pickup and place logic.
 
 ### The TF Tree 
 
@@ -131,7 +131,8 @@ On the other hand, the subtree that has the right child of `world`
 
 The `fixed_marker` frame is a static frame that is published to be 4.35
 inches to the right of the `world` frame. To the right, that is, when
-we view the `world` frame as pictured in this RViz screenshot:
+we view the `world` frame from above as pictured in this RViz
+screenshot:
 
 <p align="center">
     <kbd>
@@ -148,17 +149,17 @@ Overlaid with the model of the robot, the image looks like this:
 </p>
 
 The fiducial taped to the platform, seen in the hardware setup picture
-above, was positioned such that its coordinate frame overlaps exactly
-with the `fixed_marker` frame.
+above, was positioned such that its coordinate frame overlaps as
+closely as possible with the `fixed_marker` frame.
 
 Now, the dimensions of every fiducial is known, and our camera
 intrinsics have been calibrated via the `camera_calibration` package.
 So the `aruco_detect` package can use this information to publish
 transforms between the taped fiducial and the usb camera.
 
-But `aruco_detect` by itself knows neither where the taped fiducial nor
+But `aruco_detect` by itself doesn't know where the taped fiducial or
 the usb camera is located "in the real world". It only knows the
-transforms between the fiducial and camera frames, whereever their
+transforms between the fiducial and camera frames, wherever their
 absolute positions may be.
  
 This is where we can use the `fixed_marker` frame we mentioned above to
@@ -167,7 +168,8 @@ This is where we can use the `fixed_marker` frame we mentioned above to
 After all, we know where the `fixed_marker` frame is in the real world:
 4.35 inches to the starboard side of the center of the base of the
 robot.  Further, as mentioned above, we had aligned the taped fiducial
-such that its frame overlaps exactly with the `fixed_marker` frame.
+such that its frame overlaps as much as possible with the
+`fixed_marker` frame.
 
 So we can take the transform from the taped fiducial to the camera
 (provided by `aruco_detect`) and apply its translation and rotation to
@@ -247,31 +249,31 @@ some desired location, we must first turn it on its swivel so that
 there is a geometrically straight line between the object and the
 middle of the robot's end effector.
 
-This restriction would not pose a problem in the following scenario.
+This restriction would not pose a problem in the following case.
 Suppose that the frame of the target destination is such that its
 x-axis lies on some straight line `s`, such that for some yaw `y`, if
 we swivel the arm by `y`, its end effector would point to the target
 destination via `s`.
 
-Then, provided that `s` lies at ground-level (this is more of a
-restriction of the PX-100's movement API) we can simply implement the
-plan we described in [the problem](#the-problem) section above. That
-is, we can use some transform from the arm to the target object to move
-the arm to the object.
-
-***=====RESUME HERE=====***
+Then, we can simply implement the plan we described in [the
+problem](#the-problem) section above. That is, we can use some
+transform from the arm to the target object to move the arm to the
+object.
 
 Indeed, this is what `test_frame_broadcaster.py` and
 `test_arm_controller.py` collectively simulate. The former broadcasts a
-test frame whose x-axis lies on the straight line visualized in black
-below.
+test frame whose x-axis lies on the straight line visualized in yellow 
+below:
 
-***Insert picture of test frame with black line drawn with the measure
-tool (or some other better tool)***
+<p align="center">
+    <kbd>
+        <img src="./images/broadcasted_test_frame.jpg" />
+    </kbd>
+</p>
 
 Given that the test frame is positioned as it is, we can directly move
 the arm to the frame via transforms. This is what the
-`test_frame_broadcaster.py` code does, as seen below:
+`test_arm_controller.py` code does:
 
 ***Insert picture of robot arm having moved to the test frame***
 
