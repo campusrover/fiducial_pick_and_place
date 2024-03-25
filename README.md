@@ -21,7 +21,6 @@ are marked by, and detected with, fiducials.
         - [Problem Analysis](#problem-analysis)
         - [The Solution](#the-solution)
 - [Limitations](#limitations)
-- [Miscellaneous](#miscellaneous)
 ---
 
 ## Video
@@ -368,21 +367,56 @@ the distance `H` to move the gripper to the place frame, though the
 distance between the gripper's frame and the place frame is much less
 than `H`. 
 
-there is a straight line between the origin of
-`world` and that of `place`. The letter `H` represents the distance of
-this straight line, which can be found in 
-
-A solution would be as follows.
-1. find the distance from the origin of the `base_link` to the
-   fiducial.
-2. publish a frame that shares its origin with the fiducial, but has
-   the same orientation as the `base_link`'s frame.
-3. Use the frame to calculate the "opposite". The distance is the
-   "hypotenuse". Then use arcsin to derive the angle of the yaw.
-
-
 ## Limitations
 
-## Miscellaneous
+### Curved Fiducials
 
-The test frame.
+The strategy of the pickup logic is similar to that of the place logic
+discussed above. However, one limitation of our project is in our
+hardware: the fiducials for the drop-off zone and the cargo are not
+perfectly flat. This means that the virtual position of the fiducials
+as given by `aruco_detect` do not perfectly correspond to their real
+positions; they are off by a couple of centimeters.
+
+This offset does not matter much for the drop-off zone, since it does
+not prevent the arm from placing the cargo on the white paper area
+(which we define to be a successful place). But the offset does prevent
+the arm from picking up its cargo successfully.
+
+One solution would be to make flat fiducials. This would be a hardware
+fix. But this project's approach was to determine the offset by trial
+and error, and publish another `cargo` frame at the determined offset
+from `fiducial_1` (the frame of the fiducial attached to the physical
+cargo). The result is shown below:
+
+<p align="center">
+    <kbd>
+        <img src="./images/cargo_frame.png" />
+    </kbd>
+</p>
+
+Next, the project published a `pickup` that shares its origin with the
+`cargo` frame, and implemented the trigonometry reasoning discussed
+above:
+
+<p align="center">
+    <kbd>
+        <img src="./images/pickup_triangle.png" />
+    </kbd>
+</p>
+
+A limitation to this approach is that the x-axis of the fiducial must be
+facing away from the arm's center. This is because our calculation of
+the offset cargo frame is dependent on this physical setup.
+
+The best way to overcome this limitation would be to simply physically
+make the cargo fiducial flat, perhaps by gluing it onto the cargo box
+instead of taping it.
+
+### Angular Constraints
+
+Currently, the arm can only pick and place objects that are within the
+9 o'clock to 3 o'clock range, from the viewpoint of the gripper. But
+this can be easily extended to the arm's full angular range of motion,
+by adapting the trigonometry appropriately.
+
