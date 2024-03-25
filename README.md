@@ -267,7 +267,7 @@ below:
 
 <p align="center">
     <kbd>
-        <img src="./images/broadcasted_test_frame.jpg" />
+        <img src="./images/broadcasted_test_frame.png" />
     </kbd>
 </p>
 
