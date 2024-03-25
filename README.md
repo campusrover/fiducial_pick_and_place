@@ -360,7 +360,7 @@ The result is pictured below:
     </kbd>
 </p>
 
-Note: in navigating `arm_controller.py`, observe that the px-100's api
+Note: in navigating `arm_controller.py`, observe that the PX-100's api
 manipulates the arm's gripper by using transforms from the
 `px100/base_link` frame to the destination frame. This is why we use
 the distance `H` to move the gripper to the place frame, though the
@@ -409,8 +409,8 @@ A limitation to this approach is that the x-axis of the fiducial must be
 facing away from the arm's center. This is because our calculation of
 the offset cargo frame is dependent on this physical setup.
 
-The best way to overcome this limitation would be to simply physically
-make the cargo fiducial flat, perhaps by gluing it onto the cargo box
+The best way to overcome this limitation would be to physically make
+the cargo fiducial flat, perhaps by gluing it onto the cargo box
 instead of taping it.
 
 ### Angular Constraints
@@ -418,5 +418,5 @@ instead of taping it.
 Currently, the arm can only pick and place objects that are within the
 9 o'clock to 3 o'clock range, from the viewpoint of the gripper. But
 this can be easily extended to the arm's full angular range of motion,
-by adapting the trigonometry appropriately.
+by adapting `arm_controller.py`'s trigonometry appropriately.
 
