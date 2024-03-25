@@ -321,7 +321,7 @@ Here's an image of the `fiducial_2` and `place` frames overlapping.
     </kbd>
 </p>
 
-Now notice that we can draw the following triangle:
+Now notice that we can draw the following right triangle:
 
 <p align="center">
     <kbd>
@@ -329,7 +329,41 @@ Now notice that we can draw the following triangle:
     </kbd>
 </p>
 
+The letter `Y` represents the yaw, or the angle by which we need to
+turn the arm so that its limbs lie along the straight line between the
+origin of `world` and that of `place`. And the following is true:
 
+`arcsin(O/H) == Y`,
+
+where `H` represents the length of the hypotenuse, and `O` that of the
+line opposite `Y`, in our right triangle. 
+
+But we can get `H` by calculating the distance between the origins of
+`place` and `world`, while `O` equals the absolute value of the
+y-translation from `world` to `place`.
+
+These calculations, then, are what the `arm_controller.py` file
+performs when executed. After the results are obtained, all we need to
+do is leverage the PX-100's api to:
+
+1. move the arm's waist by yaw `Y`, and its end effector by the
+   appropriate distance (by using `H`); and
+2. use the z-translation from the world frame to the place frame to
+   make the arm descend by the appropriate height.
+
+The result is pictured below:
+
+<p align="center">
+    <kbd>
+        <img src="./images/place.png" />
+    </kbd>
+</p>
+
+Note that the arm's api    
+
+there is a straight line between the origin of
+`world` and that of `place`. The letter `H` represents the distance of
+this straight line, which can be found in 
 
 A solution would be as follows.
 1. find the distance from the origin of the `base_link` to the
