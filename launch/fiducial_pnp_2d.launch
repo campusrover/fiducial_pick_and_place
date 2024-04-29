@@ -20,7 +20,6 @@
     <node name="fixed_marker_frame_broadcaster" pkg="fiducial_pick_and_place" type="fixed_marker_frame_broadcaster.py" output="screen"/>
 
     <node name="camera_frame_broadcaster" pkg="fiducial_pick_and_place" type="camera_frame_broadcaster.py" output="screen" />
-    <node name="cargo_frame_broadcaster" pkg="fiducial_pick_and_place" type="cargo_frame_broadcaster.py" output="screen" />
     <node name="pickup_frame_broadcaster" pkg="fiducial_pick_and_place" type="pickup_frame_broadcaster.py" output="screen" />
     <node name="place_frame_broadcaster" pkg="fiducial_pick_and_place" type="place_frame_broadcaster.py" output="screen" />
 
